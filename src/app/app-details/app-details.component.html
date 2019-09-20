@@ -1,0 +1,58 @@
+<h2 role="heading" [innerHtml]='customerToEdit ? "Update Customer Details" : "Add New Customer"'></h2>
+
+<div class="col-sm-8">
+  <form role="form" [formGroup]="addNewCustomereForm">
+    <div class="form-group row">
+      <label for="customere-first-name" class="col-sm-3 col-form-label">{{customerLabels.firstName}}</label>
+      <div class="col-sm-10">
+        <input role="textbox"  maxlength="20" type="text" id="customere-first-name" class="form-control" name="firstName"
+          formControlName="firstName" />
+      </div>
+      <ng-container *ngIf="addNewCustomereForm.controls['firstName'].touched">
+      <div *ngIf="addNewCustomereForm.controls['firstName'].invalid" aria-invalid="true" class="alert alert-danger alert-dismissible fade show error-msg">
+        <strong>Error!</strong> {{customerLabels.errorMsgFirstName}}
+    </div>
+  </ng-container>
+    </div>
+    <div class="form-group row">
+      <label for="customere-last-name" class="col-sm-3 col-form-label">{{customerLabels.lastName}}</label>
+      <div class="col-sm-10">
+        <input role="textbox" maxlength="20" type="text" id="customere-last-name" class="form-control" name="lastName"
+          formControlName="lastName" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="count-of-purchase" class="col-sm-3 col-form-label">{{customerLabels.itemsPurchase}}</label>
+      <div class="col-sm-10">
+        <input role="textbox" maxlength="3" type="text" id="count-of-purchase" class="form-control" name="countOfPurchase"
+          formControlName="countOfPurchase" />
+      </div>
+      <ng-container *ngIf="addNewCustomereForm.controls['countOfPurchase'].touched">
+        <div *ngIf="addNewCustomereForm.controls['countOfPurchase'].invalid" aria-invalid="true" class="alert alert-danger alert-dismissible fade show error-msg">
+          <strong>Error!</strong>{{customerLabels.errorMsgCountOfPurchasedItem}}
+      </div>
+    </ng-container>
+    </div>
+    <div class="form-group row">
+      <label for="amount-of-items" class="col-sm-3 col-form-label">{{customerLabels.totalAmount}}</label>
+      <div class="col-sm-10">
+        <input role="textbox" maxlength="6" type="text" id="amount-of-items" class="form-control" name="amountOfItems"
+          formControlName="amountOfItems" />
+      </div>
+      <ng-container *ngIf="addNewCustomereForm.controls['amountOfItems'].touched">
+        <div *ngIf="addNewCustomereForm.controls['amountOfItems'].invalid" aria-invalid="true" class="alert alert-danger alert-dismissible fade show error-msg">
+          <strong>Error!</strong> {{customerLabels.errorMsgAmount}}
+      </div>
+    </ng-container>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-2">
+        <button role="button" (click)=cancel() class="btn btn-danger">{{customerLabels.cancel}}</button>
+      </div>
+      <div class="col-sm-4">
+        <button *ngIf="addNewCustomereForm.valid" role="button" (click)="addCustomereDetails()"
+          [innerHtml]='customerToEdit ? "Update Customer" : "Add Customer"' class="btn btn-primary"></button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,27 @@
+.today-customers {
+  .customer-list tbody {
+    tr:hover {
+      cursor: pointer;
+
+      td:first-child {
+        text-decoration: underline
+      }
+    }
+  }
+
+  h2 {
+    padding: 10px;
+  }
+
+  .col-md-8 {
+    border-right: 6px solid #b7b7bb;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .confirmation-box {
+    .btn-group {
+      margin-left: 10px;
+    }
+  }
+}
