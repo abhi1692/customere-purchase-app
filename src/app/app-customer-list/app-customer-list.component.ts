@@ -1,16 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Customer } from "../../core/models/customere-model";
 import { Router } from "@angular/router";
 import { AppService } from "../app-service";
 import { Constants } from "../../core/utils/constant";
 import { Subscription } from "rxjs/Subscription";
+// import { ebsService } from "exro-ebs";
 
 @Component({
-  selector: 'app-app-customer-list',
-  templateUrl: './app-customer-list.component.html',
-  styleUrls: ['./app-customer-list.component.scss']
+  selector: "app-app-customer-list",
+  templateUrl: "./app-customer-list.component.html",
+  styleUrls: ["./app-customer-list.component.scss"]
 })
-export class AppCustomerListComponent implements OnInit,OnDestroy {
+export class AppCustomerListComponent implements OnInit, OnDestroy {
   customerDetailSubscription: Subscription;
   customerLabels = Constants.customerLabels;
   customerToBeEdit: Customer;
@@ -20,8 +21,10 @@ export class AppCustomerListComponent implements OnInit,OnDestroy {
   viewCustomerDetails: Customer;
   isToDelete = false;
   customerTobeDeleted: Customer;
-  constructor(private readonly router: Router,
-    private readonly _appService: AppService) { }
+  constructor(
+    private readonly router: Router,
+    private readonly _appService: AppService
+  ) {}
 
   ngOnInit() {
     this.isEditCustomer = false;
@@ -32,21 +35,31 @@ export class AppCustomerListComponent implements OnInit,OnDestroy {
   }
 
   addCustomere() {
-    this.router.navigate(['./add-customer']);
+    this._appService.publishEvents("ADD_CUSTOMER_CLICK", {
+      EVENT: "ADD_CUSTOMER_CLICK",
+      CLICKED: true,
+      CURRENT_URL: this.router.url,
+      NEXT_URL: "./add-customer"
+    });
+    this.router.navigate(["./add-customer"]);
   }
 
   addUpdatedCustomere() {
-    this.customerDetailSubscription = this._appService.getCustomereDetails().subscribe((custDetails: Customer) => {
-      if (custDetails) {
-        const filteredCustomere = this.customerDetails.filter(customer => customer.customerId === custDetails.customerId);
-        if (filteredCustomere && filteredCustomere.length) {
-        } else {
-          custDetails.customerId = Math.random();
-          this._appService.setListOfCustomere(custDetails);
-          this.customerDetails = this._appService.  getListOfCustomere();
+    this.customerDetailSubscription = this._appService
+      .getCustomereDetails()
+      .subscribe((custDetails: Customer) => {
+        if (custDetails) {
+          const filteredCustomere = this.customerDetails.filter(
+            customer => customer.customerId === custDetails.customerId
+          );
+          if (filteredCustomere && filteredCustomere.length) {
+          } else {
+            custDetails.customerId = Math.random();
+            this._appService.setListOfCustomere(custDetails);
+            this.customerDetails = this._appService.getListOfCustomere();
+          }
         }
-      }
-    });
+      });
   }
 
   editCustomerDetails(customer: Customer) {
@@ -63,12 +76,20 @@ export class AppCustomerListComponent implements OnInit,OnDestroy {
   }
 
   confirmCustomerDelete(customer: Customer) {
+    this._appService.publishEvents("DELETE_CUSTOMER_CLICK_INITIATED", {
+      EVENT: "DELETE_CUSTOMER_CLICK_INITIATED",
+      CLICKED: true,
+      CURRENT_URL: this.router.url
+    });
     this.isToDelete = true;
     this.customerTobeDeleted = customer;
   }
   deleteCustomerDetails() {
     this.customerDetails = this._appService
-      .getListOfCustomere().filter(customer => customer.customerId !== this.customerTobeDeleted.customerId);
+      .getListOfCustomere()
+      .filter(
+        customer => customer.customerId !== this.customerTobeDeleted.customerId
+      );
     this._appService.listOfCustomer = this.customerDetails;
     this.cancelDelete();
   }
@@ -87,5 +108,4 @@ export class AppCustomerListComponent implements OnInit,OnDestroy {
   ngOnDestroy() {
     this.customerDetailSubscription.unsubscribe();
   }
-
 }

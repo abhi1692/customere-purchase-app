@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -23,6 +23,7 @@
     "@angular/router": "^4.2.4",
     "bootstrap": "^4.3.1",
     "core-js": "^2.4.1",
+    "exro-ebs": "file:../../../ORXE3/SDK/orxe-core-sdk/packages/ebs",
     "rxjs": "^5.4.2",
     "zone.js": "^0.8.14"
   },

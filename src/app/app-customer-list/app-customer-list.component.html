@@ -14,7 +14,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let customere of customerDetails" aria-label="View customer details" (click)="showCustomerDetails(customere)">
+            <tr *ngFor="let customere of customerDetails" aria-label="View customer details"
+              (click)="showCustomerDetails(customere)">
               <td role="row">{{customere.firstName}} {{customere.lastName}}</td>
               <td role="row">{{customere.countOfPurchase}}</td>
               <td role="row">{{customere.amountOfItems}}</td>
@@ -35,14 +36,14 @@
         </table>
         <ng-container *ngIf="isToDelete">
           <div class="alert alert-warning confirmation-box">
-            <strong>Warning!</strong> Are you sure you want to delete {{customerTobeDeleted.firstName}} {{customerTobeDeleted.lastName}} ?
+            <strong>Warning!</strong> Are you sure you want to delete {{customerTobeDeleted.firstName}}
+            {{customerTobeDeleted.lastName}} ?
             <div class="btn-group mr-2" role="group" aria-label="delete">
               <button role="button" class="btn btn-sm btn-danger"
                 (click)="deleteCustomerDetails(customere)">{{customerLabels.deleteButton}}</button>
             </div>
             <div class="btn-group mr-2" role="group" aria-label="delete">
-              <button role="button" class="btn btn-sm btn-warning"
-                (click)="cancelDelete()">CANCEL</button>
+              <button role="button " class="btn btn-sm btn-warning" (click)="cancelDelete()">CANCEL</button>
             </div>
           </div>
         </ng-container>
